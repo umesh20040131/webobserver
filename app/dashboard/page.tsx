@@ -36,12 +36,32 @@ async function upsertCurrentUser() {
 }
 
 export default async function Page() {
-  const profile = await upsertCurrentUser();
+  await upsertCurrentUser();
 
   return (
-    <div>
-      <h2>dashboard page</h2>
-      <p>Welcome, {profile.name} ({profile.email})</p>
-    </div>
+    <main
+      style={{
+        paddingTop: "2rem",
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+      }}
+    >
+      <h1 style={{ fontSize: "1.5rem", fontWeight: 600 }}>My Website</h1>
+      <button
+        style={{
+          padding: "0.5rem 1rem",
+          borderRadius: "9999px",
+          border: "none",
+          backgroundColor: "#111827",
+          color: "white",
+          fontSize: "0.875rem",
+          fontWeight: 500,
+          cursor: "pointer",
+        }}
+      >
+        + Website
+      </button>
+    </main>
   );
 }
