@@ -8,32 +8,22 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div>
-      <header
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          padding: "1rem",
-          borderBottom: "1px solid #e5e5e5",
-        }}
-      >
-        <div
-          style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}
-        >
+    <div className="min-h-screen bg-background">
+      <header className="flex items-center justify-between p-4 border-b border-border bg-card shadow-sm">
+        <div className="flex items-center gap-2">
           <Image
             src="/logo.svg"
             alt="WebObserver logo"
             width={32}
             height={32}
           />
-          <span style={{ fontWeight: 600, fontSize: "1.25rem" }}>
+          <span className="font-semibold text-xl text-foreground">
             WebObserver
           </span>
         </div>
         <UserButton afterSignOutUrl="/sign-in" />
       </header>
-      <main style={{ padding: "1rem" }}>{children}</main>
+      <main className="p-6 max-w-7xl mx-auto">{children}</main>
     </div>
   );
 }

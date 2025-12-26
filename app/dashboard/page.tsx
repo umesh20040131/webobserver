@@ -40,92 +40,32 @@ export default async function Page() {
   await upsertCurrentUser();
 
   return (
-    <main style={{ paddingTop: "2rem" }}>
+    <div>
       {/* Top row: heading and primary button on the right */}
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: "1.5rem",
-        }}
-      >
-        <h1 style={{ fontSize: "1.5rem", fontWeight: 700 }}>My Website</h1>
-        <button
-          style={{
-            padding: "0.5rem 1.25rem",
-            borderRadius: "0.5rem",
-            border: "none",
-            backgroundColor: "#1d4ed8",
-            color: "white",
-            fontSize: "0.875rem",
-            fontWeight: 500,
-            cursor: "pointer",
-          }}
-        >
-          + Website
-        </button>
+      <div className="flex justify-between items-center mb-8">
+        <h1 className="text-3xl font-bold text-foreground">My Websites</h1>
+        <a href="/dashboard/new">
+          <button className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:opacity-90 font-medium transition-opacity">
+            + Add Website
+          </button>
+        </a>
       </div>
 
       {/* Main card area */}
-      <section
-        style={{
-          border: "2px dashed #e5e7eb",
-          borderRadius: "0.75rem",
-          padding: "3rem 1rem",
-          maxWidth: "960px",
-          margin: "0 auto",
-          position: "relative",
-          textAlign: "center",
-        }}
-      >
-        {/* Top-right button inside the card */}
-        <button
-          style={{
-            position: "absolute",
-            top: "1rem",
-            right: "1rem",
-            padding: "0.5rem 1.25rem",
-            borderRadius: "0.5rem",
-            border: "none",
-            backgroundColor: "#1d4ed8",
-            color: "white",
-            fontSize: "0.875rem",
-            fontWeight: 500,
-            cursor: "pointer",
-          }}
-        >
-          + Website
-        </button>
-
+      <section className="border-2 border-dashed border-border rounded-xl p-12 max-w-4xl mx-auto text-center bg-card">
         {/* Center content */}
-        <div style={{ marginBottom: "1.5rem" }}>
-          <Image src="/www.png" alt="Website preview" width={120} height={120} />
+        <div className="mb-6">
+          <Image src="/www.png" alt="Website preview" width={120} height={120} className="mx-auto" />
         </div>
-        <p
-          style={{
-            fontSize: "1rem",
-            marginBottom: "1.5rem",
-            color: "#4b5563",
-          }}
-        >
+        <p className="text-lg mb-6 text-muted-foreground">
           You don&apos;t have any website added for tracking!
         </p>
-        <button
-          style={{
-            padding: "0.6rem 1.75rem",
-            borderRadius: "9999px",
-            border: "none",
-            backgroundColor: "#1d4ed8",
-            color: "white",
-            fontSize: "0.9rem",
-            fontWeight: 500,
-            cursor: "pointer",
-          }}
-        >
-          + Website
-        </button>
+        <a href="/dashboard/new">
+          <button className="px-7 py-3 bg-primary text-primary-foreground rounded-full hover:opacity-90 font-medium transition-opacity">
+            + Add Website
+          </button>
+        </a>
       </section>
-    </main>
+    </div>
   );
 }
