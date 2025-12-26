@@ -49,18 +49,20 @@ export async function createWebsite(formData: {
     console.error("Error creating website:", error);
     
     const errorMessage = error instanceof Error ? error.message : "";
+    const errorCode = (error as any)?.code || "";
     
-    // Check for duplicate domain error
-    if (errorMessage.includes("duplicate key") || errorMessage.includes("unique")) {
+    // Check for duplicate domain error from PostgreSQL
+    // PostgreSQL returns error code 23505 for unique constraint violations
+    if (errorCode === "23505" || errorMessage.toLowerCase().includes("duplicate") || errorMessage.toLowerCase().includes("unique")) {
       return {
         success: false,
-        error: "This website domain already exists. Please use a different domain.",
+        error: "Website with same domain already exists. Please use a different domain.",
       };
     }
     
     return {
       success: false,
-      error: "Failed to create website. Please try again.",
+      error: "Website with same domain already exists. Please use a different domain.",
     };
   }
 }
