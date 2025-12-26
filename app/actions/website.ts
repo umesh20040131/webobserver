@@ -47,9 +47,20 @@ export async function createWebsite(formData: {
     };
   } catch (error) {
     console.error("Error creating website:", error);
+    
+    const errorMessage = error instanceof Error ? error.message : "";
+    
+    // Check for duplicate domain error
+    if (errorMessage.includes("duplicate key") || errorMessage.includes("unique")) {
+      return {
+        success: false,
+        error: "This website domain already exists. Please use a different domain.",
+      };
+    }
+    
     return {
       success: false,
-      error: error instanceof Error ? error.message : "Failed to create website",
+      error: "Failed to create website. Please try again.",
     };
   }
 }
