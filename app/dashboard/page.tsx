@@ -4,7 +4,7 @@ import Image from "next/image";
 import { db } from "../configs/db";
 import { usersTable } from "../configs/schema";
 import { getWebsites } from "@/app/actions/getWebsites";
-import { WebsiteCard } from "./_components/WebsiteCard";
+import { WebsiteList } from "./_components/WebsiteList";
 
 async function upsertCurrentUser() {
   const user = await currentUser();
@@ -56,15 +56,7 @@ export default async function Page() {
 
       {/* Main content area */}
       {websites && websites.length > 0 ? (
-        <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {websites.map((website) => (
-            <WebsiteCard 
-              key={website.websiteId} 
-              domain={website.domain} 
-              timezone={website.timezone}
-            />
-          ))}
-        </section>
+        <WebsiteList websites={websites} />
       ) : (
         <section className="border-2 border-dashed border-border rounded-xl p-12 max-w-4xl mx-auto text-center bg-card">
           {/* Center content */}
