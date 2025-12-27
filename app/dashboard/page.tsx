@@ -3,6 +3,8 @@ import { redirect } from "next/navigation";
 import Image from "next/image";
 import { db } from "../configs/db";
 import { usersTable } from "../configs/schema";
+import { getWebsites } from "@/app/actions/getWebsites";
+import { WebsiteCard } from "./_components/WebsiteCard";
 
 async function upsertCurrentUser() {
   const user = await currentUser();
@@ -38,11 +40,12 @@ async function upsertCurrentUser() {
 
 export default async function Page() {
   await upsertCurrentUser();
+  const { websites } = await getWebsites();
 
   return (
-    <div>
+    <div className="space-y-8">
       {/* Top row: heading and primary button on the right */}
-      <div className="flex justify-between items-center mb-8">
+      <div className="flex justify-between items-center">
         <h1 className="text-3xl font-bold text-foreground">My Websites</h1>
         <a href="/dashboard/new">
           <button className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:opacity-90 font-medium transition-opacity">
@@ -51,21 +54,33 @@ export default async function Page() {
         </a>
       </div>
 
-      {/* Main card area */}
-      <section className="border-2 border-dashed border-border rounded-xl p-12 max-w-4xl mx-auto text-center bg-card">
-        {/* Center content */}
-        <div className="mb-6">
-          <Image src="/www.png" alt="Website preview" width={120} height={120} className="mx-auto" />
-        </div>
-        <p className="text-lg mb-6 text-muted-foreground">
-          You don&apos;t have any website added for tracking!
-        </p>
-        <a href="/dashboard/new">
-          <button className="px-7 py-3 bg-primary text-primary-foreground rounded-full hover:opacity-90 font-medium transition-opacity">
-            + Add Website
-          </button>
-        </a>
-      </section>
+      {/* Main content area */}
+      {websites && websites.length > 0 ? (
+        <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {websites.map((website) => (
+            <WebsiteCard 
+              key={website.websiteId} 
+              domain={website.domain} 
+              timezone={website.timezone}
+            />
+          ))}
+        </section>
+      ) : (
+        <section className="border-2 border-dashed border-border rounded-xl p-12 max-w-4xl mx-auto text-center bg-card">
+          {/* Center content */}
+          <div className="mb-6">
+            <Image src="/www.png" alt="Website preview" width={120} height={120} className="mx-auto" />
+          </div>
+          <p className="text-lg mb-6 text-muted-foreground">
+            You don&apos;t have any website added for tracking!
+          </p>
+          <a href="/dashboard/new">
+            <button className="px-7 py-3 bg-primary text-primary-foreground rounded-full hover:opacity-90 font-medium transition-opacity">
+              + Add Website
+            </button>
+          </a>
+        </section>
+      )}
     </div>
   );
 }
